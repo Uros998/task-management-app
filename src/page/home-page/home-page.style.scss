@@ -1,0 +1,45 @@
+.home-wrapper {
+  width: 100%;
+  height: auto;
+
+  .home-title {
+    text-align: center;
+    width: 100%;
+    margin: 2rem auto;
+
+    h2 {
+      font-size: 3rem;
+      letter-spacing: 2px;
+      font-weight: 500;
+    }
+  }
+
+  .home-btn {
+    width: 40%;
+    margin: 0 auto;
+  }
+
+  .cards-wrapper {
+    width: 40%;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+
+  }
+}
+
+
+.dialog-input {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+
+  .dialog-input {
+    margin: 1rem auto;
+  }
+}
+
+
+
