@@ -7,9 +7,7 @@ function Card({data, deleteTask}) {
     const handleDeleteClick = () => {
         deleteTask(data.id);
     }
-
     const handleButtonClick = () => {
-        // Simulacija prosleđivanja podataka na novu stranu
         const taskID = data.id;
         window.location.href = `/overview/${taskID}`;
     };

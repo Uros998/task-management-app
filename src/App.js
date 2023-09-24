@@ -7,7 +7,6 @@ import {getAllTasks, localStorageList} from "./services/task.service";
 
 function App() {
 
-
     useEffect(() => {
         localStorageList();
     }, []);

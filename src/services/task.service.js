@@ -21,7 +21,6 @@ export const getTaskById = async (taskId) => {
     }
 }
 
-
 export const saveTask = async (task) => {
     const taskList = JSON.parse(localStorage.getItem('taskList')) || [];
     taskList.push(task)
@@ -33,7 +32,6 @@ export const updateTask = async (task) => {
     console.log("Update task");
     return task;
 }
-
 
 export const deleteTask = async (task) => {
     console.log("Delete task");

@@ -11,7 +11,6 @@ import useStore from "../../services/zustand/zustand";
 
 function HomePage() {
 
-    const {tasks, filterStatus, setFilterStatus, setTasks, addTask} = useStore();
 
     const [formData, setFormData] = useState({
         id: undefined,
@@ -20,20 +19,17 @@ function HomePage() {
         status: ''
     });
 
-    const [open, setOpen] = useState(false);
-
     useEffect(() => {
         getAllTasks().then(setTasks);
     }, []);
 
-    useEffect(() => {
-        console.log("LIST", tasks);
-    }, [tasks]);
+    const {tasks, filterStatus, setFilterStatus, setTasks, addTask} = useStore()
 
+    const [open, setOpen] = useState(false);
 
     const filterTasks =
         filterStatus === 'sve'
-            ? tasks // Prikaži sve podatke ako je odabrano "sve"
+            ? tasks
             : tasks.filter((task) => task.status === filterStatus);
 
     const handleSubmit = (event) => {
@@ -61,13 +57,13 @@ function HomePage() {
     const deleteTask = (taskId) => {
         const newList = tasks.filter((task) => task.id !== taskId);
         setTasks(newList);
+        localStorage.setItem("taskList", JSON.stringify(newList));
     }
 
     const handleChange = (event) => {
         const {name, value} = event.target;
         setFormData({...formData, [name]: value});
     };
-
 
     return (
         <>
@@ -88,7 +84,8 @@ function HomePage() {
                         <Material.Button variant="contained" onClick={() => setFilterStatus('To Do')} color="warning">
                             TO DO
                         </Material.Button>
-                        <Material.Button variant="contained" onClick={() => setFilterStatus('In progress')} color="warning">
+                        <Material.Button variant="contained" onClick={() => setFilterStatus('In progress')}
+                                         color="warning">
                             In progress
                         </Material.Button>
                         <Material.Button variant="contained" onClick={() => setFilterStatus('Done')} color="warning">

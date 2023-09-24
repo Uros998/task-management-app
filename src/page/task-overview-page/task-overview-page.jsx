@@ -1,27 +1,13 @@
 import "./task-overview-page.style.scss";
 import {useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
-import {getAllTasks, getTaskById, saveTask, updateTask} from "../../services/task.service";
+import {getTaskById, updateTask} from "../../services/task.service";
 import * as Material from "@mui/material";
 import Statuses from "../../mock-data/statuses.json";
 import useStore from "../../services/zustand/zustand";
 
 
 const TaskOverviewPage = () => {
-
-    // useEffect(() => {
-    //     getAllTasks().then(setTasks);
-    // }, []);
-
-    let statusesList;
-
-    useEffect(() => {
-        statusesList = Statuses;
-    },[]);
-
-    const { tasks, editTask } = useStore();
-
-    const {id} = useParams();
 
     const [formData, setFormData] = useState({
         id: undefined,
@@ -38,6 +24,15 @@ const TaskOverviewPage = () => {
         });
     }, []);
 
+    useEffect(() => {
+        statusesList = Statuses;
+    }, []);
+
+    let statusesList;
+
+    const {editTask} = useStore();
+
+    const {id} = useParams();
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -51,21 +46,27 @@ const TaskOverviewPage = () => {
 
         updateTask(newTask)
             .then(updated => {
-                console.log(updated, "IZMENA")
                 editTask(updated);
             })
-            .catch(console.error)
-            .finally(() => setFormData({id: undefined, title: "", note: "", status: ""}));
+            .catch(console.error);
     };
 
-
+    const handleButtonClick = () => {
+        window.location.href = `/`;
+    };
 
     return (
         <div>
             <div className="overview-wrapper">
+                <div className="back-btn">
+                    <Material.Button variant="contained" onClick={handleButtonClick} color="primary">
+                        Nazad
+                    </Material.Button>
+                </div>
                 <div className="overview-title">
                     <h2>PREGLED ZADATKA</h2>
                 </div>
+
                 <div className="form-wrapper">
                     <form onSubmit={handleSubmit} className="form">
 
