@@ -9,7 +9,7 @@
     "id": 2,
     "title": "Drugi Naslov",
     "note": "Ovo je druga napomena.",
-    "status": "To Do"
+    "status": "Done"
   },
   {
     "id": 3,
@@ -21,12 +21,12 @@
     "id": 4,
     "title": "Drugi Naslov",
     "note": "Ovo je druga napomena.",
-    "status": "To Do"
+    "status": "Done"
   },
   {
     "id": 5,
     "title": "Treći Naslov",
     "note": "Ovo je treća napomena.",
-    "status": "To Do"
+    "status": "In progress"
   }
 ]
