@@ -8,11 +8,19 @@ function Card({data, deleteTask}) {
         deleteTask(data.id);
     }
 
-
+    const handleButtonClick = () => {
+        // Simulacija prosleđivanja podataka na novu stranu
+        const taskID = data.id;
+        window.location.href = `/overview/${taskID}`;
+    };
 
     return (
         <Material.Card className="card">
             <Material.CardContent>
+                <Material.Typography variant="body2" className="status" color="text.secondary">
+                    {data?.status}
+                </Material.Typography>
+                <hr/>
                 <Material.Typography gutterBottom variant="h5" component="div">
                     {data?.title}
                 </Material.Typography>
@@ -21,7 +29,7 @@ function Card({data, deleteTask}) {
                 </Material.Typography>
             </Material.CardContent>
             <Material.CardActions>
-                <Material.Button variant="contained" color="success">
+                <Material.Button variant="contained" color="success"  onClick={handleButtonClick}>
                     Pregled
                 </Material.Button>
                 <Material.Button onClick={handleDeleteClick} variant="outlined" color="error">

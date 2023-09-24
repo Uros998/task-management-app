@@ -3,28 +3,15 @@ import * as Material from "@mui/material";
 import {useEffect, useState} from "react";
 import Card from "../../component/card/card"
 import {getAllTasks, saveTask} from "../../services/task.service";
-
-
-const statuses = [
-    {
-        value: '1',
-        label: 'ToDo',
-    },
-    {
-        value: '2',
-        label: 'In progress',
-    },
-    {
-        value: '3',
-        label: 'Done',
-    },
-
-];
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Statuses from "../../mock-data/statuses.json";
+import useStore from "../../services/zustand/zustand";
 
 
 function HomePage() {
 
-    const [data, setData] = useState([]);
+    const {tasks, filterStatus, setFilterStatus, setTasks, addTask} = useStore();
 
     const [formData, setFormData] = useState({
         id: undefined,
@@ -35,31 +22,45 @@ function HomePage() {
 
     const [open, setOpen] = useState(false);
 
-
     useEffect(() => {
-        getAllTasks().then(setData);
+        getAllTasks().then(setTasks);
     }, []);
 
     useEffect(() => {
-        console.log("LIST",data);
-    }, [data]);
+        console.log("LIST", tasks);
+    }, [tasks]);
 
+
+    const filterTasks =
+        filterStatus === 'sve'
+            ? tasks // Prikaži sve podatke ako je odabrano "sve"
+            : tasks.filter((task) => task.status === filterStatus);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const newStatus = statuses.find(s => s.value === formData.status)?.label;
-        const newTask = {title: formData.title, note: formData.note, status: newStatus};
+        const newId = tasks[tasks.length - 1].id + 1;
+        const newStatus = Statuses.find(s => s.value === formData.status)?.label;
+        const newTask = {id: newId, title: formData.title, note: formData.note, status: newStatus};
 
-        // setData([...data, newTask]);
-        saveTask(newTask)
-            .then(saved =>  setData([...data, saved]))
-            .catch(console.error)
-            .finally(() => setFormData({id: undefined, title: "", note: "", status: ""}));
+        if (newTask.note !== '' && newTask.title !== '' && newTask.status !== undefined) {
+            saveTask(newTask)
+                .then(saved => {
+                    addTask(saved);
+
+                })
+                .catch(console.error)
+                .finally(() => setFormData({id: undefined, title: "", note: "", status: ""}));
+        } else {
+            toast.error('Niste uneli sve podatke!', {
+                position: toast.POSITION.TOP_CENTER,
+                autoClose: 2000,
+            });
+        }
     };
 
     const deleteTask = (taskId) => {
-        const newList = data.filter((task) => task.id !== taskId);
-        setData(newList);
+        const newList = tasks.filter((task) => task.id !== taskId);
+        setTasks(newList);
     }
 
     const handleChange = (event) => {
@@ -75,9 +76,25 @@ function HomePage() {
                     <h2>LISTA ZADATAKA</h2>
                 </div>
                 <div className="home-btn">
-                    <Material.Button variant="contained" onClick={() => setOpen(true)} color="primary">
-                        Dodaj novi zadatak
-                    </Material.Button>
+                    <div className="add-btn">
+                        <Material.Button variant="contained" onClick={() => setOpen(true)} color="primary">
+                            Dodaj novi zadatak
+                        </Material.Button>
+                    </div>
+                    <div className="filter-btn">
+                        <Material.Button variant="contained" onClick={() => setFilterStatus('sve')} color="warning">
+                            Sve
+                        </Material.Button>
+                        <Material.Button variant="contained" onClick={() => setFilterStatus('To Do')} color="warning">
+                            TO DO
+                        </Material.Button>
+                        <Material.Button variant="contained" onClick={() => setFilterStatus('In progress')} color="warning">
+                            In progress
+                        </Material.Button>
+                        <Material.Button variant="contained" onClick={() => setFilterStatus('Done')} color="warning">
+                            Done
+                        </Material.Button>
+                    </div>
                 </div>
                 <div>
                     <Material.Dialog
@@ -89,12 +106,12 @@ function HomePage() {
                         maxWidth="sm"
                         className="dialog-wrapper"
                     >
-                        <Material.DialogTitle id="alert-dialog-title" className="dialog-title">
+                        <div className="dialog-title">
                             <h2>Dodaj novi zadatak</h2>
-                        </Material.DialogTitle>
+                        </div>
 
-                        <Material.DialogContent className="dialog-input">
-                            <form onSubmit={handleSubmit}>
+                        <Material.DialogContent className="dialog-content">
+                            <form onSubmit={handleSubmit} className="form">
 
                                 <Material.TextField id="outlined-basic"
                                                     name="title"
@@ -120,12 +137,14 @@ function HomePage() {
                                     label="Status"
                                     value={formData.status}
                                 >
-                                    {statuses.map((option) => (
+                                    {Statuses.map((option) => (
                                         <Material.MenuItem key={option.value} value={option.value}>
                                             {option.label}
                                         </Material.MenuItem>
                                     ))}
+
                                 </Material.TextField>
+                                <ToastContainer/>
                                 <Material.Button type="submit" variant="outlined" color="success">
                                     Sačuvaj
                                 </Material.Button>
@@ -137,8 +156,8 @@ function HomePage() {
 
 
                 <div className="cards-wrapper">
-                    {data.map((cardData) => (
-                        <Card key={cardData.id}  data={cardData} deleteTask={deleteTask}/>
+                    {filterTasks.map((cardData) => (
+                        <Card key={cardData.id} data={cardData} deleteTask={deleteTask}/>
                     ))}
                 </div>
             </div>

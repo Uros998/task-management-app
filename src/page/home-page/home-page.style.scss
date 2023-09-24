@@ -17,6 +17,23 @@
   .home-btn {
     width: 40%;
     margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+
+    .add-btn {
+      width: 30%;
+    }
+
+    .filter-btn {
+      width: 70%;
+      text-align: right;
+
+      button {
+        margin: 0 0.5rem;
+      }
+    }
+
   }
 
   .cards-wrapper {
@@ -30,16 +47,29 @@
   }
 }
 
-
-.dialog-input {
-  display: flex;
-  flex-direction: column;
+.dialog-title {
   width: 80%;
+  margin: 1rem auto;
+  text-align: left;
 
-  .dialog-input {
-    margin: 1rem auto;
-  }
 }
 
+.dialog-content {
+  width: 80%;
+  margin: 0 auto 2rem auto;
+
+  .form {
+    display: flex;
+    justify-content: left;
+    flex-direction: column;
+    width: 100%;
+
+    .dialog-input {
+      margin: 1em auto;
+      width: 100%;
+
+    }
+  }
+}
 
 
