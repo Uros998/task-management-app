@@ -33,7 +33,6 @@ function Card({data, deleteTask}) {
                 <Material.Button onClick={handleDeleteClick} variant="outlined" color="error">
                     Obriši
                 </Material.Button>
-
             </Material.CardActions>
         </Material.Card>
     );
