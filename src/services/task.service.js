@@ -14,6 +14,7 @@ export const localStorageList = async () => {
 export const getTaskById = async (taskId) => {
     try {
         const allTasks = await getAllTasks();
+        console.log(allTasks, "GETTAASK")
         return allTasks.find(task => task.id === parseInt(taskId));
     } catch (error) {
         console.error("Greška pri dohvatanju zadatka po ID-u:", error);

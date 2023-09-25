@@ -5,6 +5,7 @@ import {getTaskById, updateTask} from "../../services/task.service";
 import * as Material from "@mui/material";
 import Statuses from "../../mock-data/statuses.json";
 import useStore from "../../services/zustand/zustand";
+import {toast, ToastContainer} from "react-toastify";
 
 
 const TaskOverviewPage = () => {
@@ -16,8 +17,12 @@ const TaskOverviewPage = () => {
         status: ''
     });
 
+    const {editTask} = useStore();
+
+
     useEffect(() => {
         getTaskById(id).then(data => {
+            console.log(data, "VRACA SERIVS")
             const newStatus = statusesList.find(s => s?.label === data?.status)?.value;
             const newTask = {id: data?.id, title: data?.title, note: data?.note, status: newStatus};
             setFormData(newTask);
@@ -29,8 +34,6 @@ const TaskOverviewPage = () => {
     }, []);
 
     let statusesList;
-
-    const {editTask} = useStore();
 
     const {id} = useParams();
 
@@ -47,6 +50,13 @@ const TaskOverviewPage = () => {
         updateTask(newTask)
             .then(updated => {
                 editTask(updated);
+                const taskList = JSON.parse(localStorage.getItem("taskList")) || [];
+                taskList[updated.id - 1] = updated;
+                localStorage.setItem('taskList', JSON.stringify(taskList));
+                toast.success('Uspesno sacuvano!', {
+                    position: toast.POSITION.TOP_CENTER,
+                    autoClose:1000,
+                })
             })
             .catch(console.error);
     };
@@ -109,6 +119,7 @@ const TaskOverviewPage = () => {
                         <Material.Button type="submit" variant="outlined" color="success">
                             Izmeni
                         </Material.Button>
+                        <ToastContainer/>
                     </form>
                 </div>
             </div>
