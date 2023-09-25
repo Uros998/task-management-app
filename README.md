@@ -68,3 +68,76 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+
+# User Guide: Task Management Application
+
+#### Welcome to the Task Management Application! This guide will help you make the most of the app by providing step-by-step instructions on how to use its features.
+
+### Table of Contents
+
+#### 1. Home Screen Overview
+#### 2. Adding a New Task
+#### 3. Filtering Tasks by Status
+#### 4. Deleting a Task
+#### 5. Viewing Task Details
+#### 6. Editing a Task
+
+## 1. Home Screen Overview
+
+#### The home screen of the application displays a list of all your tasks. These tasks are presented as cards, containing titles, descriptions, and statuses. On this screen, you can view all your tasks.
+
+## 2. Adding a New Task
+
+#### To add a new task, follow these steps:
+
+#### Step 1: On the home screen, find and click the "Add New Task" button.
+#### Step 2: A dialog with a form for adding a new task will open. Fill in the fields for the title, description, and status.
+#### Step 3: Click the "Save" or "Add" button to add the new task.
+
+## 3. Filtering Tasks by Status
+
+#### The application allows you to filter the task list by their status. There are four buttons for filtering:
+
+#### All: Displays all tasks.
+#### To Do: Shows only tasks with the "To Do" status.
+#### In Progress: Displays only tasks with the "In Progress" status.
+#### Done: Shows only tasks with the "Done" status.
+
+
+#### Click the appropriate filtering button to display tasks with the desired status.
+
+## 4. Deleting a Task
+
+#### To delete a task, follow these steps:
+#### Step 1: On the home screen, find the card with the task you want to delete.
+#### Step 2: On the task card, click the "Delete" button.
+#### Step 3: Confirm the deletion if prompted.
+
+## 5. Viewing Task Details
+
+#### To view the details of a task, follow these steps:
+#### Step 1: On the home screen, locate the card with the task you want to view.
+#### Step 2: Click on the task card.
+#### Step 3: A new page will open with all the details of the task, including title, description, and status.
+
+## 6. Editing a Task
+
+#### If you want to edit the details of a task, follow these steps:
+#### Step 1: Review the task details following step 5.
+#### Step 2: On the task detail page, find the "Edit" option.
+#### Step 3: Edit the desired task information (title, description, status).
+#### Step 4: Click the "Save" button to save your changes.
+
+
+
+
+
+
+
+
+
+
+
+
+

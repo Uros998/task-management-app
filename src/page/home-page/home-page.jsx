@@ -42,7 +42,7 @@ function HomePage() {
             saveTask(newTask)
                 .then(saved => {
                     addTask(saved);
-
+                    setOpen(false);
                 })
                 .catch(console.error)
                 .finally(() => setFormData({id: undefined, title: "", note: "", status: ""}));
