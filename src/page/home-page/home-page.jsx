@@ -2,7 +2,7 @@ import "./home-page.style.scss";
 import * as Material from "@mui/material";
 import {useEffect, useState} from "react";
 import Card from "../../component/card/card"
-import {getAllTasks, saveTask} from "../../services/task.service";
+import {getAllTasks, getRadnomTask, saveTask} from "../../services/task.service";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Statuses from "../../mock-data/statuses.json";
@@ -60,6 +60,32 @@ function HomePage() {
         localStorage.setItem("taskList", JSON.stringify(newList));
     }
 
+
+    const addRadnomTask = () => {
+        let check = false;
+        getRadnomTask().then(data => {
+
+            check = filterTasks.some(t => t.title === data.title);
+
+            if (check) {
+                addRadnomTask();
+            } else {
+                const newId = tasks[tasks.length - 1].id + 1;
+                const newRandomTask = {
+                    id: newId,
+                    title: data.title,
+                    note: "Novi random zadatak",
+                    status: data.completed ? "Done" : "To Do"
+                };
+                saveTask(newRandomTask)
+                    .then(saved => {
+                        addTask(saved);
+                    })
+                    .catch(console.error);
+            }
+        });
+    };
+
     const handleChange = (event) => {
         const {name, value} = event.target;
         setFormData({...formData, [name]: value});
@@ -74,7 +100,10 @@ function HomePage() {
                 <div className="home-btn">
                     <div className="add-btn">
                         <Material.Button variant="contained" onClick={() => setOpen(true)} color="primary">
-                            Dodaj novi zadatak
+                            Nov zadatak
+                        </Material.Button>
+                        <Material.Button variant="contained" onClick={addRadnomTask} color="primary">
+                            Random zadatak
                         </Material.Button>
                     </div>
                     <div className="filter-btn">

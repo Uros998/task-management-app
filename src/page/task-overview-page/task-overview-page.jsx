@@ -22,7 +22,6 @@ const TaskOverviewPage = () => {
 
     useEffect(() => {
         getTaskById(id).then(data => {
-            console.log(data, "VRACA SERIVS")
             const newStatus = statusesList.find(s => s?.label === data?.status)?.value;
             const newTask = {id: data?.id, title: data?.title, note: data?.note, status: newStatus};
             setFormData(newTask);
